@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+
+  <h1>{{name}}</h1>
+
+  <!-- {% for key, value in features.items() %}
+    <p>{{key}}: {{ "%.2f"|format(value|float) }}</p>
+  {% endfor %} -->
+
+  <div class="search-results">
+    <table class="tracks-table table table-dark .table-borderless table-hover">
+      <thead>
+        <th/>
+        <th> Track </th>
+        <th> Album </th>
+        <th> Year </th>
+        <th> Popularity </th>
+        <th/>
+      </thead>
+      <tbody>
+      {% for track in tracks %}
+        <tr>
+          <td> <image src={{track.album.images[2].url}}> </td>
+          <td>
+            <a href="/track-features/{{track.id}}/{{track.name}}">
+              <p class="track-title"> {{track.name}} </p>
+            </a>
+            <p> {{track.artists[0].name}} </p>
+          </td>
+          <td> {{track.album.name}}</td>
+          <td> {{track.album.release_date[:4:]}}</td>
+          <td> {{track.popularity}}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- {% for object in analysis %}
+    <h4> {{object}} </h4>
+    {% for item in analysis[object] %}
+      <p>{{item}}: {{analysis[object][item]}}</p>
+    {% endfor %}
+  {% endfor %} -->
+
+
+{% endblock %}

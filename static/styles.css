@@ -1,0 +1,313 @@
+body {
+  background-image: linear-gradient(#2e2e2e, #141414 35vh);
+  color: white;
+  min-height: 100vh
+}
+
+.navbar {
+  max-width: 1400px;
+  margin: auto;
+  padding: 16px 30px;
+  font-family: "roboto", sans-serif;
+  font-weight: 300;
+}
+
+.navbar-brand {
+  font-family: 'Quicksand', sans-serif;
+  padding-top: 0;
+  opacity: 0.9;
+}
+
+.navbar-brand:hover {
+  opacity: 1;
+}
+
+.bi-soundwave {
+  font-size: 31px;
+  margin-right: 4px;
+  color: #91daff;
+}
+
+.navbar-brand span {
+  position: relative;
+  bottom: 3px;
+  font-size: 15px;
+  color: #91daff;
+}
+
+.nav-link {
+  font-size: 14px;
+  font-weight: 300;
+}
+
+
+.user-image {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  margin: 0 8px;
+}
+
+.connect-spotify {
+  color: #20c95b !important;
+  opacity: 0.85;
+  font-weight: 400;
+}
+
+.connect-spotify:hover {
+  opacity: 1;
+}
+
+
+.page-main {
+  margin: auto;
+  max-width: 1200px;
+  font-family: "roboto", sans-serif;
+}
+
+h1, h2, h3, h4, p {
+  font-family: "roboto", sans-serif;
+  font-weight: 100;
+}
+
+p {
+  margin: 2px auto;
+}
+
+a {
+  text-decoration: none;
+}
+
+
+/* Seed Form */
+
+#seed-form {
+  margin: auto;
+  padding: 16px 0 30px;
+  font-weight: 100;
+
+}
+
+.form-fields, .form-group {
+  display: inline-block;
+  margin-right: 1%;
+}
+
+.form-control, .form-control:focus {
+  background-color: #2e2e2e !important;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  height: 48px !important;
+  color: white;
+  font-size: 16px;
+  font-family: "roboto", sans-serif;
+  font-weight: 300;
+}
+
+.search-input {
+  width: calc(84% - 180px);
+  min-width: 300px;
+  cursor: default;
+}
+
+.search-input input {
+  font-family: "roboto", sans-serif;
+  font-weight: 100;
+}
+
+.input-group-text {
+  background-color: #2e2e2e;
+  color: white;
+  border: none;
+  width: 52px;
+}
+
+.input-group-text i {
+  margin: auto;
+  font-size: 20px;
+}
+
+.bi-x {
+  cursor: pointer;
+}
+
+.select-input {
+  width: 8.75%;
+  min-width: 70px;
+}
+
+#seed-form label {
+  font-size: 14px;
+}
+
+.submit-btn, .submit-btn:focus {
+  color: #91daff;
+  border-color: #91daff;
+  border-radius: 50%;
+  box-shadow: none;
+  background-color: #1a1a1a;
+  font-size: 16px;
+  height: 38px;
+  width: 38px;
+  padding: 0 !important;
+  margin-bottom: 2px;
+  margin-left: 0.5%;
+  opacity: 0.85;
+}
+
+.submit-btn:hover {
+  color: #91daff;
+  border-color: #91daff;
+  opacity: 1;
+}
+
+.submit-btn i {
+  margin: auto;
+}
+
+.save-btn, .save-btn:focus {
+  color: #91daff;
+  box-shadow: none;
+  font-size: 12px;
+  width: 48px;
+  padding: 0 !important;
+  margin-left: 1.2%;
+  opacity: 0.85;
+}
+
+.save-btn:hover {
+  color: #91daff;
+  opacity: 1;
+}
+
+
+/* Search dropdown */
+
+#search-results {
+  margin-top: 0 !important;
+  float: left;
+  position: absolute;
+  z-index: 1;
+  width: calc(84vw - 200.4px);
+  max-width: 807.7px;
+  padding: 0;
+}
+
+.search-results {
+  background-color: #2e2e2e !important;
+}
+
+.results-item {
+  padding: 6px 0 !important;
+  font-size: 16px;
+}
+
+.results-item img, table img {
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+  margin: 0 12px;
+}
+
+.list-item:hover {
+  background-color: #496887;
+  cursor: pointer;
+}
+
+.selected-track {
+  background-color: #2e2e2e;
+}
+
+
+
+
+/* Playlist */
+
+#playlist {
+  margin-bottom: 100px;
+}
+
+.playlist-table {
+  max-width: 1200px;
+  font-size: 13px;
+  font-weight: 100 !important;
+  color: #d9d9d9;
+  cursor: default;
+}
+
+.table > :not(caption) > * > * {
+  background-color: inherit !important;
+}
+
+thead, tbody, tfoot, tr, td, th {
+  border-style: none;
+  margin: auto;
+  vertical-align: middle;
+  padding: 6px !important;
+}
+
+.table > :not(:first-child) {
+  border-top-style: none;
+}
+
+thead, th {
+  padding: 12px auto;
+  font-size: 12px;
+  font-weight: 100 !important;
+}
+
+.track-title {
+  font-size: 16px;
+  color: white;
+}
+
+.playlist i {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.playlist-item-active {
+  background-color: #323539;
+}
+
+.year-col {
+  width: 7%;
+}
+
+.popularity-col {
+  width: 13%;
+}
+
+.progress {
+  background-color: inherit;
+  width: 100%;
+  height: 8px;
+}
+
+.progress-bar {
+  background-color: inherit;
+  background-image: linear-gradient(90deg, #6292b3, #8fcc85);
+  width: 100%;
+}
+
+
+/* Account page */
+
+.profile-header {
+  margin: 30px auto;
+  text-align: center;
+}
+
+.profile-image {
+  height: 64px;
+  width: 64px;
+  border-radius: 50%;
+  /* margin: 0 12px; */
+}
+
+.profile-name {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 16px;
+}

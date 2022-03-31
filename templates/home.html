@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+  <!-- <form id="seed-form"> -->
+    <!-- {{form.hidden_tag()}} -->
+
+    <div id="seed-form">
+      <div class="form-inline">
+        <div class="form-group search-input">
+          <div class="input-group" id="selected-track">
+            <span class="input-group-text"> <i class="bi bi-x"></i> </span>
+          </div>
+
+          <div class="input-group" id="search-input">
+            <span class="input-group-text"> <i class="bi bi-search"></i> </span>
+            <input class="form-control" id="title" name="title" autocomplete="on" placeholder="Search track name"/>
+          </div>
+        </div>
+
+        {% for field in form if field.widget.input_type != 'hidden' %}
+          <div class="form-group select-input">
+            {{field.label}}
+            {{field (class="form-control") }}
+          </div>
+        {% endfor %}
+        <button class="btn submit-btn"> <i class="bi bi-music-note-list"> </i></button>
+        <button class="btn save-btn"> Save Playlist </i></button>
+      </div>
+
+      <ul class="search-results" id="search-results"> </ul>
+    </div>
+  <!-- </form> -->
+
+
+  <!-- "/playlist/{{id}}/{{name}}" -->
+
+  <div id="playlist" class="playlist">
+    <table class="playlist-table table table-dark .table-borderless table-hover">
+      <thead>
+        <th/>
+        <th/>
+        <th> Track </th>
+        <th> Album </th>
+        <th class="year-col"> Year </th>
+        <th class="popularity-col"> Popularity </th>
+      </thead>
+      <tbody>
+      <!-- {% for track in tracks %}
+        <tr>
+          <td> <image src={{track.album.images[2].url}}> </td>
+          <td>
+            <a href="/track-features/{{track.id}}/{{track.name}}">
+              <p class="track-title"> {{track.name}} </p>
+            </a>
+            <p> {{track.artists[0].name}} </p>
+          </td>
+          <td> {{track.album.name}}</td>
+          <td> {{track.album.release_date[:4:]}}</td>
+          <td> {{track.popularity}}</td>
+        </tr>
+      {% endfor %} -->
+      </tbody>
+    </table>
+  </div>
+
+{% endblock %}

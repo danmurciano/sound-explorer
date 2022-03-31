@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+
+  <div class="profile-header">
+    <img class="profile-image" src="{{user.image}}"/>
+    <h2 class="profile-name"> {{user.display_name}} </h2>
+  </div>
+
+  <div>
+    <h4> Playlists <h4>
+  </div>
+
+
+  <!-- "/playlist/{{id}}/{{name}}" -->
+
+  <div id="playlist" class="playlist">
+    <table class="playlist-table table table-dark .table-borderless table-hover">
+      <thead>
+        <th/>
+        <th/>
+        <th> Track </th>
+        <th> Album </th>
+        <th class="year-col"> Year </th>
+        <th class="popularity-col"> Popularity </th>
+      </thead>
+      <tbody>
+      {% for track in tracks %}
+        <tr>
+          <td> <img src={{track.album.images[2].url}}> </td>
+          <td>
+            <a href="/track-features/{{track.id}}/{{track.name}}">
+              <p class="track-title"> {{track.name}} </p>
+            </a>
+            <p> {{track.artists[0].name}} </p>
+          </td>
+          <td> {{track.album.name}}</td>
+          <td> {{track.album.release_date[:4:]}}</td>
+          <td> {{track.popularity}}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+{% endblock %}
