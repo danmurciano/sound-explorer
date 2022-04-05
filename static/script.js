@@ -1,5 +1,3 @@
-const BASE_URL = "http://localhost:5000";
-
 $("#search-results").hide();
 $("#selected-track").hide();
 $("#loading").hide();
@@ -33,7 +31,7 @@ function createTableItem(track) {
           <i class="bi bi-play" data-url=${track.preview_url}></i>
         </td>
         <td>
-          <img src=${track.album.images[2].url} alt="..." class="playlist-img">
+          <img src=${track.album.images[2] ? track.album.images[2].url: "/static/images/pl_img.jpg"} alt="..." class="playlist-img">
         </td>
         <td>
           <p class="track-title"> ${track.name} </p>
@@ -53,7 +51,7 @@ function createTableItem(track) {
       <tr class="playlist-item">
         <td> </td>
         <td>
-          <img src=${track.album.images[2].url} alt="..." class="playlist-img">
+          <img src=${track.album.images[2] ? track.album.images[2].url: "/static/images/pl_img.jpg"} alt="..." class="playlist-img">
         </td>
         <td>
           <p class="track-title"> ${track.name} </p>
@@ -86,7 +84,7 @@ $("#title").on("input", async function(evt) {
   evt.preventDefault();
   pauseAudio();
   if ($("#title").val().length >= 2) {
-    let url = `${BASE_URL}/`;
+    let url = "/";
     let q = $("#title").val();
     let payload = {q};
     const response = await axios.post(url, payload);
@@ -143,7 +141,7 @@ $(".submit-btn").click(async function(evt) {
     $(".save-btn").hide();
     $(".submit-btn").hide();
     $("#loading").show();
-    let url = `${BASE_URL}/seed-playlist`;
+    let url = "/seed-playlist";
     let id = $(".selected-track").attr("id");
     let popularity = $("#popularity").val();
     let limit = $("#limit").val();
@@ -237,7 +235,7 @@ $(".modal-save").click(async function(evt) {
     $(".modal-alert").html(`<i class="bi bi-exclamation-circle"></i> Playlist name is required.`);
     $(".modal-alert").show();
   } else {
-    let url = `${BASE_URL}/save-playlist`;
+    let url = "/save-playlist";
     let name = $("#plName").val();
     let description = $("#plDescription").val();
     let image = seedTrack.album.images[0].url;
@@ -245,7 +243,7 @@ $(".modal-save").click(async function(evt) {
 
     const response = await axios.post(url, payload);
     if (response.status === 200) {
-      document.location.href=`${BASE_URL}/users/${response.data}`;
+      document.location.href=`/users/${response.data}`;
     }
   }
 });

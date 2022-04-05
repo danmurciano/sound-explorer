@@ -49,7 +49,7 @@ def authorize_client():
 
 
 @app.route("/seed-playlist", methods=["POST"])
-def get_suggested_tracks():
+def seed_playlist():
     data = request.json
     return seedPlaylist(app, session, data)
 

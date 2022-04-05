@@ -82,6 +82,9 @@ a:hover {
   color: inherit;
 }
 
+.alert {
+  margin-bottom: 40px;
+}
 
 /* Seed Form */
 
