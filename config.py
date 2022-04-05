@@ -22,7 +22,7 @@ class Config(object):
     DEBUG_TB_INTERCEPT_REDIRECTS = False
     SCOPE = "playlist-modify-private playlist-modify-public playlist-read-collaborative"
     REDIRECT_URI = os.getenv("REDIRECT_URI", "http://localhost:5000/callback/")
-    LOCALSTORAGE = os.getenv("LOCALSTORAGE", localStoragePy('sound-explorer', 'json'))
+    LOCALSTORAGE = localStoragePy('sound-explorer', 'json')
     SECRET_KEY = os.getenv("SECRET_KEY", Secrets.SECRET_KEY)
     CLIENT_ID = os.getenv("CLIENT_ID", Secrets.CLIENT_ID)
     CLIENT_SECRET = os.getenv("CLIENT_SECRET", Secrets.CLIENT_SECRET)
