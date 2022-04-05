@@ -13,7 +13,7 @@ try:
     from config import Config
     app.config.from_object(Config)
 except ImportError:
-    app.config.from_object(os.getenv())
+    app.config = os.getenv()
 
 connect_db(app)
 db.create_all()
