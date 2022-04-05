@@ -1,7 +1,7 @@
 import os
-from localStoragePy import localStoragePy
 
 try:
+    from localStoragePy import localStoragePy
     from config_secrets import Secrets
 except ImportError:
     pass
