@@ -1,4 +1,3 @@
 -e venv/
 __pycache__
 config.py
-functions2.py

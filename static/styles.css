@@ -67,7 +67,7 @@ body {
 
 h1, h2, h3, h4, p {
   font-family: "roboto", sans-serif;
-  font-weight: 100;
+  /* font-weight: 100; */
 }
 
 p {
@@ -76,6 +76,10 @@ p {
 
 a {
   text-decoration: none;
+}
+
+a:hover {
+  color: inherit;
 }
 
 
@@ -95,11 +99,14 @@ a {
 
 .form-control, .form-control:focus {
   background-color: #2e2e2e !important;
+  color: white;
   border: none;
   outline: none;
   box-shadow: none;
+}
+
+.seed-form {
   height: 48px !important;
-  color: white;
   font-size: 16px;
   font-family: "roboto", sans-serif;
   font-weight: 300;
@@ -166,6 +173,15 @@ a {
   margin: auto;
 }
 
+.spinner-border {
+  color: #91daff;
+  height:34px;
+  width: 34px;
+  padding: 0 !important;
+  vertical-align: -12px;
+  margin-left: 0.5%;
+}
+
 .save-btn, .save-btn:focus {
   color: #91daff;
   box-shadow: none;
@@ -203,7 +219,7 @@ a {
   font-size: 16px;
 }
 
-.results-item img, table img {
+.results-item img, .playlist-item img {
   height: 36px;
   width: 36px;
   border-radius: 50%;
@@ -292,22 +308,128 @@ thead, th {
 }
 
 
+/* save-modal */
+
+.modal-content {
+  padding: 12px;
+}
+
+.modal-header {
+  border: none;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.modal-footer {
+  border: none;
+  padding-top: 0;
+}
+
+.modal-title {
+  font-size: 22px;
+}
+
+.close {
+  background-color: inherit;
+  color: #d9d9d9;
+  border: none;
+  border-radius: 50%;
+  font-size: 28px;
+  font-weight: 100;
+}
+
+.modal-content {
+  background-color: #242424;
+}
+
+#plImage {
+  height: 160px;
+  width: 160px;
+  border: none !important;
+  box-shadow: 0 0 50px #141414;
+}
+
+.modal-field {
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 300;
+  background-color: #2e2e2e !important;
+  height: 40px !important;
+}
+
+#plDescription {
+  height: 104px !important;
+  resize: none;
+}
+
+.modal-save, .modal-save:focus {
+  border-radius: 24px;
+  padding: 6px 24px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  box-shadow: none;
+  transition: transform .2s;
+}
+
+.modal-save:hover {
+  transform: scale(1.1);
+  box-shadow: none;
+}
+
+.modal-save:hover:focus {
+  transform: scale(1);
+  box-shadow: none;
+}
+
+.modal-alert {
+  background-color: #2b77c2;
+  color: white;
+  font-size: 11px;
+  margin: 0 12px 16px;
+  padding: 6px;
+  border-radius: 4px;
+  width: calc(100% - 24px);
+}
+
+.modal-alert i {
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 6px;
+}
+
+
 /* Account page */
 
 .profile-header {
   margin: 30px auto;
-  text-align: center;
 }
 
 .profile-image {
   height: 64px;
   width: 64px;
   border-radius: 50%;
-  /* margin: 0 12px; */
 }
 
 .profile-name {
   display: inline-block;
   vertical-align: middle;
   margin: 16px;
+}
+
+#user-playlists {
+  max-width: 960px;
+  margin: 60px auto 100px;
+  /* margin-top: 60px; */
+}
+
+#user-playlists h4 {
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+#user-playlists img {
+  height: 48px;
+  width: 48px;
+  margin: 4px 12px;
 }

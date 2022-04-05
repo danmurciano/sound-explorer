@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SelectField, SearchField
+from wtforms import StringField, SelectField, HiddenField, TextAreaField
 from wtforms_alchemy import model_form_factory
 from models import db, User
 from wtforms.validators import InputRequired, Length, NumberRange, Email
@@ -16,15 +16,11 @@ class RegisterForm(ModelForm):
         model = User
 
 
-class LoginForm(FlaskForm):
-    username = StringField("Username", validators=[InputRequired(), Length(min=3, max=20)])
-    password = PasswordField("Password", validators=[InputRequired(), Length(min=6, max=20)])
-
 class SearchSongForm(FlaskForm):
-    # title = StringField("Song Title", validators=[InputRequired(), Length(max=50)])
-    popularity = SelectField("Popularity", choices=[("any", "Any"), ("popular", "Popular"),("obscure", "Obscure")])
-    limit = SelectField("Results", choices=[(20),(40),(60)])
+    popularity = SelectField("Popularity", choices=[("any", "Any"), ("high", "High"),("low", "Low"),("obscure", "Obscure")])
+    limit = SelectField("Results", choices=[(20),(50),(100)])
 
 
-class DeleteForm(FlaskForm):
-    """No fields are required"""
+class SavePlaylistForm(FlaskForm):
+    plName = StringField(validators=[InputRequired(), Length(max=100)])
+    plDescription = TextAreaField(validators=[Length(max=250)])

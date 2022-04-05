@@ -2,39 +2,39 @@
 {% block content %}
 
 
-  <!-- <form id="seed-form"> -->
-    <!-- {{form.hidden_tag()}} -->
-
-    <div id="seed-form">
-      <div class="form-inline">
-        <div class="form-group search-input">
-          <div class="input-group" id="selected-track">
-            <span class="input-group-text"> <i class="bi bi-x"></i> </span>
-          </div>
-
-          <div class="input-group" id="search-input">
-            <span class="input-group-text"> <i class="bi bi-search"></i> </span>
-            <input class="form-control" id="title" name="title" autocomplete="on" placeholder="Search track name"/>
-          </div>
+<!-- Seed Form -->
+  <div id="seed-form">
+    <div class="form-inline">
+      <div class="form-group search-input">
+        <div class="input-group" id="selected-track">
+          <span class="input-group-text"> <i class="bi bi-x"></i> </span>
         </div>
 
-        {% for field in form if field.widget.input_type != 'hidden' %}
-          <div class="form-group select-input">
-            {{field.label}}
-            {{field (class="form-control") }}
-          </div>
-        {% endfor %}
-        <button class="btn submit-btn"> <i class="bi bi-music-note-list"> </i></button>
-        <button class="btn save-btn"> Save Playlist </i></button>
+        <div class="input-group" id="search-input">
+          <span class="input-group-text"> <i class="bi bi-search"></i> </span>
+          <input class="form-control seed-form" id="title" name="title" autocomplete="on" placeholder="Search track name"/>
+        </div>
       </div>
 
-      <ul class="search-results" id="search-results"> </ul>
+      {% for field in form1 if field.widget.input_type != 'hidden' %}
+        <div class="form-group select-input">
+          {{field.label}}
+          {{field (class="form-control seed-form") }}
+        </div>
+      {% endfor %}
+      <button class="btn submit-btn"> <i class="bi bi-music-note-list"> </i> </button>
+      <div id="loading" class="spinner-border" role="status">
+        <span class="sr-only"></span>
+      </div>
+      <button class="btn save-btn" data-toggle="modal" data-target="#save-modal"> Save Playlist </button>
     </div>
-  <!-- </form> -->
+
+    <ul class="search-results" id="search-results"> </ul>
+  </div>
 
 
-  <!-- "/playlist/{{id}}/{{name}}" -->
 
+<!-- Suggested Tracks -->
   <div id="playlist" class="playlist">
     <table class="playlist-table table table-dark .table-borderless table-hover">
       <thead>
@@ -46,22 +46,37 @@
         <th class="popularity-col"> Popularity </th>
       </thead>
       <tbody>
-      <!-- {% for track in tracks %}
-        <tr>
-          <td> <image src={{track.album.images[2].url}}> </td>
-          <td>
-            <a href="/track-features/{{track.id}}/{{track.name}}">
-              <p class="track-title"> {{track.name}} </p>
-            </a>
-            <p> {{track.artists[0].name}} </p>
-          </td>
-          <td> {{track.album.name}}</td>
-          <td> {{track.album.release_date[:4:]}}</td>
-          <td> {{track.popularity}}</td>
-        </tr>
-      {% endfor %} -->
       </tbody>
     </table>
   </div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="save-modal" tabindex="-1" role="dialog" aria-labelledby="save-modalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Save Playlist</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body row">
+        <div class="modal-alert"> </div>
+        <div class="col-5">
+          <img id="plImage"/>
+        </div>
+        <div class="col-7">
+          {{ form2.plName (class="form-control modal-field", placeholder="Add a name") }}
+          {{ form2.plDescription (class="form-control modal-field", placeholder="Add an optional decription") }}
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-sm btn-light modal-save">SAVE</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

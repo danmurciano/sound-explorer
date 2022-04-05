@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="profile-header">
+  <img class="profile-image" src="{{user.image}}"/>
+  <h2 class="profile-name"> {{user.display_name}} </h2>
+</div>
+
+
+<div id="user-playlists" class="playlist">
+  <h4> Playlists <h4>
+  <table class="playlist-table table table-dark .table-borderless">
+    <thead>
+      <th/>
+      <th> Name </th>
+      <th> Description </th>
+    </thead>
+    <tbody>
+    {% for playlist in playlists %}
+      <tr>
+        <td>
+
+          <a href="{{playlist.link}}" target="_blank" rel="noopener noreferrer">
+            {% if playlist.images %}
+              <img src={{playlist.images[0].url}}>
+            {% else %}
+              <img src="/static/images/pl_img.jpg">
+            {% endif %}
+          </a>
+        </td>
+        <td class="track-title">
+          <a class="track-title" href="{{playlist.link}}" target="_blank" rel="noopener noreferrer">
+            <p> {{playlist.name}} </p>
+          </a>
+        </td>
+        <td> {{playlist.description}} </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+{% endblock %}

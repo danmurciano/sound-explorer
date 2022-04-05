@@ -1,15 +1,11 @@
-from flask import Flask, request, render_template, redirect, session, flash, make_response, jsonify
-import requests
-from werkzeug.urls import url_encode
+from flask import Flask, request, render_template, redirect, session, flash
 from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db, User
-from forms import SearchSongForm, DeleteForm
-import os
-import string, random, logging, time
+from forms import SearchSongForm, SavePlaylistForm
 from config import Config
-from functions import makeGetRequest, getToken, checkTokenStatus, getUserInformation, localStorage
-from functions import create_playlist_obscure, create_playlist_any, create_playlist_popular
-
+from base_functions import makeGetRequest, makePostRequest, getToken, checkTokenStatus, authorizeUser, authorizeCallback, logoutUser, localStorage
+from seed_functions import searchTrack, seedPlaylist
+from user_functions import getUserPlaylists, createPlaylist, replacePlaylistLink
 
 
 app = Flask(__name__)
@@ -22,22 +18,19 @@ db.create_all()
 
 
 
-spotify = "https://api.spotify.com/v1"
+# Main app routes
 
 @app.route("/", methods=["GET", "POST"])
 def homepage():
-    form = SearchSongForm()
-    # if form.validate_on_submit():
+    form1 = SearchSongForm()
+    form2 = SavePlaylistForm()
+
     if request.method == 'POST':
         data = request.json
-        url = f"{spotify}/search"
-        params = {"type": "track", "q": data["q"], "limit": 10}
-        response = makeGetRequest(app, session, url, params)
-        response_json = jsonify(tracks=response["tracks"]["items"])
-        return (response_json, 200)
+        return searchTrack(app, session, data)
 
     if "token" in session:
-        return render_template("home.html", form=form)
+        return render_template("home.html", form1=form1, form2=form2)
     else:
         if localStorage.getItem("loggedInUser"):
             return redirect("/authorize-user")
@@ -55,67 +48,34 @@ def authorize_client():
 
 
 
-@app.route("/playlist", methods=["POST"])
-def show_track_feat():
+@app.route("/seed-playlist", methods=["POST"])
+def get_suggested_tracks():
     data = request.json
-    id = data["id"]
-    popularity = data["popularity"]
-    limit = int(data["limit"])
-    url1 = f"{spotify}/audio-features/{id}"
-    url2 = f"{spotify}/recommendations"
-    features = makeGetRequest(app, session, url1)
-    return globals()["create_playlist_" + popularity](app, session, url2, id, limit, features["energy"])
-
-
+    return seedPlaylist(app, session, data)
 
 
 
 
 # User Routes
 
-
 @app.route('/authorize-user')
 def authorize_user():
-    client_id = app.config['CLIENT_ID']
-    redirect_uri = app.config['REDIRECT_URI']
-    scope = app.config['SCOPE']
-    state_key = ''.join(random.choice(string.ascii_lowercase) for x in range(16))
-    session['state_key'] = state_key
-    if localStorage.getItem("loggedInUser"):
-        show_dialog = False
-    else:
-        show_dialog = True
-
-    authorize_url = 'https://accounts.spotify.com/en/authorize?'
-    params = {'response_type': 'code',
-              'client_id': client_id,
-              'redirect_uri': redirect_uri,
-              'scope': scope,
-              'state': state_key,
-              'show_dialog': show_dialog}
-    query_params = url_encode(params)
-    response = make_response(redirect(authorize_url + query_params))
-    return response
+    return authorizeUser(app, session)
 
 
 @app.route('/callback/')
 def callback():
-    # make sure the response came from Spotify
     if request.args.get('state') != session['state_key']:
     	return render_template('unauthorized.html', error='State failed.')
     if request.args.get('error'):
     	return render_template('unauthorized.html', error='Spotify error.')
     else:
-        code = request.args.get('code')
-        session.pop('state_key', None)
-        response = getToken(app, session, code)
-        if response == 200:
-            user_response = getUserInformation(app, session)
-
-            if User.query.get(user_response["id"]):
-                user = User.query.get(user_response["id"])
+        payload = authorizeCallback(app, session)
+        if payload != None:
+            if User.query.get(payload["id"]):
+                user = User.query.get(payload["id"])
             else:
-                user = User.register(user_response["id"], user_response["display_name"], user_response["images"][0]["url"])
+                user = User.register(payload["id"], payload["display_name"], payload["images"][0]["url"])
                 db.session.add(user)
                 db.session.commit()
             session['user'] = user.spotify_id
@@ -128,25 +88,33 @@ def callback():
 
 
 
-
 @app.route('/users/<user>')
 def show_user(user):
     if "user" not in session or user != session["user"]:
         return redirect("/unauthorized")
 
     user = User.query.get_or_404(user)
+    playlists = getUserPlaylists(app, session)
 
-    return render_template("users/show.html", user=user)
+    for playlist in playlists:
+        playlist["link"] = replacePlaylistLink(playlist["uri"])
+
+    return render_template("users/user_account.html", user=user, playlists=playlists)
+
 
 
 @app.route("/logout", methods=["GET", "POST"])
 def logout():
-    session.pop("token")
-    session.pop("token_expiration")
-    session.pop("refresh_token")
-    session.pop("user")
-    session.pop("user_name")
-    session.pop("user_image")
-    localStorage.removeItem("loggedInUser")
-    flash("Successfully logged out.")
+    logoutUser(session)
     return redirect("/")
+
+
+
+@app.route('/save-playlist', methods=["POST"])
+def create_palylist():
+    user = session["user"]
+    data = request.json
+    payload = createPlaylist(app, session, user, data);
+    if payload != None:
+        flash("Playlist created successfully.")
+        return user
