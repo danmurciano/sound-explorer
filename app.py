@@ -1,5 +1,4 @@
 from flask import Flask, request, render_template, redirect, session, flash
-from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db, User
 from forms import SearchSongForm, SavePlaylistForm
 from base_functions import makeGetRequest, makePostRequest, getToken, checkTokenStatus, authorizeUser, authorizeCallback, logoutUser
@@ -14,8 +13,6 @@ try:
     app.config.from_object(Config)
 except ImportError:
     pass
-
-toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
 db.create_all()
