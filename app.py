@@ -4,16 +4,12 @@ from forms import SearchSongForm, SavePlaylistForm
 from base_functions import makeGetRequest, makePostRequest, getToken, checkTokenStatus, authorizeUser, authorizeCallback, logoutUser
 from seed_functions import searchTrack, seedPlaylist
 from user_functions import getUserPlaylists, createPlaylist, replacePlaylistLink
-import os
+from config import Config
 
 
 app = Flask(__name__)
+app.config.from_object(Config)
 
-try:
-    from config import Config
-    app.config.from_object(Config)
-except ImportError:
-    app.config = os.getenv()
 
 connect_db(app)
 db.create_all()
