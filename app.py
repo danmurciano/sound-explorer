@@ -3,7 +3,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db, User
 from forms import SearchSongForm, SavePlaylistForm
 # from config import Config
-from base_functions import makeGetRequest, makePostRequest, getToken, checkTokenStatus, authorizeUser, authorizeCallback, logoutUser, localStorage
+from base_functions import makeGetRequest, makePostRequest, getToken, checkTokenStatus, authorizeUser, authorizeCallback, logoutUser
 from seed_functions import searchTrack, seedPlaylist
 from user_functions import getUserPlaylists, createPlaylist, replacePlaylistLink
 
@@ -32,7 +32,7 @@ def homepage():
     if "token" in session:
         return render_template("home.html", form1=form1, form2=form2)
     else:
-        if localStorage.getItem("loggedInUser"):
+        if app.config['LOCALSTORAGE'].getItem("loggedInUser"):
             return redirect("/authorize-user")
         else:
             return redirect("/authorize-client")
@@ -105,7 +105,7 @@ def show_user(user):
 
 @app.route("/logout", methods=["GET", "POST"])
 def logout():
-    logoutUser(session)
+    logoutUser(app, session)
     return redirect("/")
 
 
