@@ -2,14 +2,18 @@ from flask import Flask, request, render_template, redirect, session, flash
 from flask_debugtoolbar import DebugToolbarExtension
 from models import connect_db, db, User
 from forms import SearchSongForm, SavePlaylistForm
-# from config import Config
 from base_functions import makeGetRequest, makePostRequest, getToken, checkTokenStatus, authorizeUser, authorizeCallback, logoutUser
 from seed_functions import searchTrack, seedPlaylist
 from user_functions import getUserPlaylists, createPlaylist, replacePlaylistLink
 
 
 app = Flask(__name__)
-# app.config.from_object(Config)
+
+try:
+    from config import Config
+    app.config.from_object(Config)
+except ImportError:
+    pass
 
 toolbar = DebugToolbarExtension(app)
 
