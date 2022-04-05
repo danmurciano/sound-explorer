@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, redirect, session, flash
 from models import connect_db, db, User
 from forms import SearchSongForm, SavePlaylistForm
-from base_functions import makeGetRequest, makePostRequest, getToken, checkTokenStatus, authorizeUser, authorizeCallback, logoutUser
+from base_functions import makeGetRequest, makePostRequest, getToken, checkTokenStatus, authorizeUser, authorizeCallback, logoutUser, localStorage
 from seed_functions import searchTrack, seedPlaylist
 from user_functions import getUserPlaylists, createPlaylist, replacePlaylistLink
 from config import Config
@@ -30,7 +30,7 @@ def homepage():
     if "token" in session:
         return render_template("home.html", form1=form1, form2=form2)
     else:
-        if app.config['LOCALSTORAGE'].getItem("loggedInUser"):
+        if localStorage.getItem("loggedInUser"):
             return redirect("/authorize-user")
         else:
             return redirect("/authorize-client")

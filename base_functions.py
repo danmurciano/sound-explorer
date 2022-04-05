@@ -1,7 +1,9 @@
 from flask import request, redirect, session, flash, make_response, jsonify
 import requests, string, random, logging, time
 from werkzeug.urls import url_encode
+from localStoragePy import localStoragePy
 
+localStorage = localStoragePy('sound-explorer', 'json')
 
 
 def makeGetRequest(app, session, url, params={}):
@@ -58,7 +60,7 @@ def getToken(app, session, code=None, refreshToken=None):
         session['token_expiration'] = time.time() + json['expires_in']
         if 'refresh_token' in json:
             session['refresh_token'] = json['refresh_token']
-            app.config['LOCALSTORAGE'].setItem('loggedInUser', True)
+            localStorage.setItem('loggedInUser', True)
         return 200
     else:
         logging.error('getToken:' + str(post_response.status_code))
@@ -80,7 +82,7 @@ def authorizeUser(app, session):
     scope = app.config['SCOPE']
     state_key = ''.join(random.choice(string.ascii_lowercase) for x in range(16))
     session['state_key'] = state_key
-    if app.config['LOCALSTORAGE'].getItem("loggedInUser"):
+    if localStorage.getItem("loggedInUser"):
         show_dialog = False
     else:
         show_dialog = True
@@ -124,4 +126,4 @@ def logoutUser(app, session):
     session.pop("user")
     session.pop("user_name")
     session.pop("user_image")
-    app.config['LOCALSTORAGE'].removeItem("loggedInUser")
+    localStorage.removeItem("loggedInUser")
