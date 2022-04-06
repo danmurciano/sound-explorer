@@ -68,8 +68,8 @@ def callback():
         return redirect("/", error='State failed.')
     if request.args.get('error'):
         flash("Unable to connect Spotify account. Try again later.")
-        return redirect("/", error='State failed.', error='Spotify error.')
-        
+        return redirect("/", error='Spotify error.')
+
     else:
         payload = authorizeCallback(app, session)
         if payload != None:
