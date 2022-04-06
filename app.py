@@ -64,9 +64,12 @@ def authorize_user():
 @app.route('/callback/')
 def callback():
     if request.args.get('state') != session['state_key']:
-    	return render_template('unauthorized.html', error='State failed.')
+        flash("Unable to connect Spotify account. Try again later.")
+        return redirect("/", error='State failed.')
     if request.args.get('error'):
-    	return render_template('unauthorized.html', error='Spotify error.')
+        flash("Unable to connect Spotify account. Try again later.")
+        return redirect("/", error='State failed.', error='Spotify error.')
+        
     else:
         payload = authorizeCallback(app, session)
         if payload != None:
@@ -90,7 +93,7 @@ def callback():
 @app.route('/users/<user>')
 def show_user(user):
     if "user" not in session or user != session["user"]:
-        return redirect("/unauthorized")
+        return redirect("/")
 
     user = User.query.get_or_404(user)
     playlists = getUserPlaylists(app, session)
