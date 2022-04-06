@@ -28,11 +28,15 @@ def homepage():
         return searchTrack(app, session, data)
 
     if "token" in session:
+        print("A")
         return render_template("home.html", form1=form1, form2=form2)
+
     else:
         if app.config['LOCALSTORAGE'].getItem("loggedInUser"):
+            print("B")
             return redirect("/authorize-user")
         else:
+            print("C")
             return redirect("/authorize-client")
 
 
