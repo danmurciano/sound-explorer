@@ -79,7 +79,7 @@ def authorizeUser(app, session):
     scope = app.config['SCOPE']
     state_key = ''.join(random.choice(string.ascii_lowercase) for x in range(16))
     session['state_key'] = state_key
-    if app.config['LOCALSTORAGE'].getItem("loggedInUser"):
+    if "loggedInUser" in app.config['LOCALSTORAGE']:
         show_dialog = False
     else:
         show_dialog = True
@@ -123,4 +123,6 @@ def logoutUser(app, session):
     session.pop("user")
     session.pop("user_name")
     session.pop("user_image")
-    app.config['LOCALSTORAGE'].removeItem("loggedInUser")
+
+    if "loggedInUser" in app.config['LOCALSTORAGE']:
+        app.config['LOCALSTORAGE'].removeItem("loggedInUser")
