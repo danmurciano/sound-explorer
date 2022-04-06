@@ -82,7 +82,8 @@ def callback():
             return redirect("/")
 
         else:
-            return render_template('unauthorized.html', error='Failed to access token.')
+            flash("Unable to connect Spotify account. Try again later.")
+            return redirect("/")
 
 
 
