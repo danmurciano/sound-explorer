@@ -1,4 +1,4 @@
-from flask import request, redirect, session, flash, make_response, jsonify
+from flask import request, redirect, session, flash, make_response
 import requests, string, random, logging, time
 from werkzeug.urls import url_encode
 
