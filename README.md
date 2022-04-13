@@ -1,13 +1,13 @@
 ### Getting Started
-1. Create a fresh virtual env and install the dependencies from the requirements.txt file:
+Create a fresh virtual env and install the dependencies from the requirements.txt file:
 ```bash
 pip install -r requirements.txt
 ```
-2. Run the development server:
+Run the development server:
 ```bash
 flask run
 ```
-3. Open [http://localhost:5000](http://localhost:5000) with your browser to see the result.
+Open [http://localhost:5000](http://localhost:5000) with your browser to see the result.
 
 
 Deployed app - [https://sound-explorer.herokuapp.com/](https://sound-explorer.herokuapp.com/)
