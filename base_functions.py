@@ -1,4 +1,4 @@
-from flask import request, redirect, session, flash, make_response
+from flask import request, redirect, session, make_response
 import requests, string, random, logging, time
 from werkzeug.urls import url_encode
 
@@ -79,10 +79,6 @@ def authorizeUser(app, session):
     scope = app.config['SCOPE']
     state_key = ''.join(random.choice(string.ascii_lowercase) for x in range(16))
     session['state_key'] = state_key
-    if app.config['LOCALSTORAGE'].getItem("loggedInUser"):
-        show_dialog = False
-    else:
-        show_dialog = True
 
     authorize_url = 'https://accounts.spotify.com/en/authorize?'
     params = {'response_type': 'code',
@@ -90,7 +86,7 @@ def authorizeUser(app, session):
               'redirect_uri': redirect_uri,
               'scope': scope,
               'state': state_key,
-              'show_dialog': show_dialog}
+              'show_dialog': False}
     query_params = url_encode(params)
     response = make_response(redirect(authorize_url + query_params))
     return response
